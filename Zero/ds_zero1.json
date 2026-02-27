@@ -1,0 +1,32 @@
+{
+    "_comment": "ZeRO Stage 1: Shard OPTIMIZER STATES across GPUs. Each GPU holds full params + grads, but only 1/N of Adam m and v.",
+
+    "train_batch_size": 16,
+    "train_micro_batch_size_per_gpu": 4,
+    "gradient_accumulation_steps": 2,
+
+    "zero_optimization": {
+        "stage": 1,
+        "reduce_bucket_size": 5e8,
+        "allgather_bucket_size": 5e8
+    },
+
+    "optimizer": {
+        "type": "AdamW",
+        "params": {
+            "lr": 2e-5,
+            "betas": [0.9, 0.95],
+            "eps": 1e-8,
+            "weight_decay": 0.01
+        }
+    },
+
+    "bf16": {
+        "enabled": true
+    },
+
+    "gradient_clipping": 1.0,
+
+    "steps_per_print": 9999999,
+    "wall_clock_breakdown": true
+}
